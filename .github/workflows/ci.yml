@@ -1,9 +1,28 @@
-name: First CI
-on: push
+name: Python CI Testing
+
+on:
+  push:
+
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Run basic command
-        run: echo "Hello CI"
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pytest
+          pip install pylint
+      # 4. Lint check (NEW)
+      - name: Lint code
+        run: pylint.
+      - name: Run tests
+        run: pytest
